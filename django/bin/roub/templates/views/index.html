@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<title>天湖洗衣</title>
+	<link rel="stylesheet" href="/static_url/public/css/normalize.css">
+	<link rel="stylesheet" href="/static_url/public/css/main.css">
+	<link rel="stylesheet" href="/static_url/public/css/xpull.css">
+	<link rel="stylesheet" href="/static_url/public/css/tianhuxiyi.css">
+	<script>
+    //10px 1rem;
+    !function(){function a(){if(document.documentElement.clientWidth<600){document.documentElement.style.fontSize=document.documentElement.clientWidth/32+"px"}else{document.documentElement.style.fontSize="16.875px"}}var b=null;window.addEventListener("resize",function(){clearTimeout(b),b=setTimeout(a,300)},!1),a()}(window);
+    </script>
+</head>
+<body class="ios tianhuxiyi-bg">
+	<header class="header tianhuxiyi-header">
+		<h1>天湖洗衣</h1>
+	</header>
+	<div class="container tianhuxiyi p-t main" id="container">
+		<section class="slide swiper-container tianhuxiyi-banner" id="banner">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><img class="swiper-lazy" src="/static_url/public/img/demo/tianhuxiyi_banner_01.png" alt=""></div>
+			</div>
+			<div class="swiper-pagination tianhuxiyi-page" id="banner-page">
+				<span class="swiper-pagination-bullet"></span>
+			</div>
+		</section>
+        <section class="tianhuxiyi-nav">
+			<h3 class="nav-title">普通清洗</h3>
+            <ul class="clearfix">
+                <li>
+                    <a href="{% url 'shopList' %}">
+                    <img src="/static_url/public/img/icon01.png"/>
+                    <span>日常洗衣</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'shopList' %}">
+                    <img src="/static_url/public/img/icon02.png"/>
+                    <span>家居家纺</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="tianhuxiyi-nav">
+			<h3 class="nav-title">了解天湖洗</h3>
+            <ul class="clearfix">
+                <li>
+                    <a href="{% url 'xdxz' %}">
+                    <img src="/static_url/public/img/icon03.png"/>
+                    <span>下单须知</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'fwjs' %}">
+                    <img src="/static_url/public/img/icon04.png"/>
+                    <span>服务介绍</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+        <section class="tianhuxiyi-nav">
+			<h3 class="nav-title">留言板</h3>
+			<div>
+				<a href="{% url 'feedback' %}"><img src="/static_url/public/img/tianhuxiyi_liuyanban.jpg" width="100%"></a>
+			</div>
+        </section>
+
+    </div>
+	<footer>
+    	<ul class="footer-menu">
+            <li class="current">
+            	<a href="#"><span class="icon-menu home"></span><p>首页</p></a>
+            </li>
+            <li>
+            	<a href="#"><span class="icon-menu msg"></span><p>客服</p></a>
+            </li>
+            <li>
+            	<a href="#"><span class="icon-menu my"></span><p>我的</p></a>
+            </li>
+        </ul>
+    </footer>
+  <script src="/static_url/public/js/jquery-2.1.3.min.js"></script>
+	<script src="/static_url/public/js/xpull.js"></script>
+	<script src="/static_url/public/js/jquery.lazyload.min.js"></script>
+	<script src="/static_url/public/js/swiper.min.js"></script>
+	<script>
+	//$('#container').xpull({
+//		'pullThreshold':60,
+//	    'maxPullThreshold':60,
+//	    'onPullEndFunc':function(){
+//	    	window.location.reload();
+//	    },
+//	    'spinnerTimeout':2000
+//	});
+//
+//	var mySlide = new Swiper('#banner', {
+//		speed: 400,
+//		pagination: '#banner-page',
+//		autoplay: 5000,
+//		autoplayDisableOnInteraction: false,
+//		loop: true,
+//		preloadImages: false,
+//		lazyLoading: true
+//	});
+    </script>
+</body>
+</html>

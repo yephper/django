@@ -74,189 +74,97 @@
 
     </header>
 
-
-
-
     <div class="darktitle">新品/促销</div>
+    {% for val in response %}
     <div class="item style2">
         <div class="itemshelf">
-            <div class="shelfinfo01">大排</div>
-            <div class="shelfinfo03">25元五香大排套餐</div>
+            <div class="shelfinfo01">{{ val.gname }}</div>
+            <div class="shelfinfo03">{{ val.gdescription }}</div>
             <div class="shelfinfo02 staring"><img src="/static_url/shop/image/star_45.png" alt="">&nbsp;月售6630份</div>
         </div>
         <div class="buybtn">
-            <p tapmode="" onclick="buyfood(0)">￥25</p>
-            <span class="minusorder">
-                <img src="/static_url/shop/image/foodlist_bg_foodnum.png" alt="" class="numbg"><span class="thisordernum">0</span>
-                <span class="minus" tapmode="" onclick="minuscash(0)">－</span>
+            <p tapmode="" onclick="buyfood({{ val.id }},{{ val.goprice }})">￥{{ val.goprice }}</p>
+            <span class="minusorder minusorder{{ val.id }}" style="display: none;">
+                <img src="/static_url/shop/image/foodlist_bg_foodnum.png" alt="" class="numbg"><span class="thisordernum thisordernum{{ val.id }}">0</span>
+                <span class="minus" tapmode="" onclick="minuscash({{ val.id }},{{ val.goprice }})">－</span>
             </span>
 
         </div>
     </div>
-
-
-
-    <div class="darktitle">商务套餐</div>
-    <div class="item style2">
-        <div class="itemshelf">
-            <div class="shelfinfo01">20元</div>
-            <div class="shelfinfo03">20元商务套餐</div>
-            <div class="shelfinfo02 staring"><img src="../image/star_45.png" alt="">&nbsp;月售14438份</div>
-        </div>
-        <div class="buybtn"><p tapmode="" onclick="buyfood(1)">￥20</p>
-            <span class="minusorder">
-                <img src="../image/foodlist_bg_foodnum.png" alt="" class="numbg"><span class="thisordernum">0</span>
-                <span class="minus" tapmode="" onclick="minuscash(1)">－</span>
-            </span>
-        </div>
-    </div>
-    <div class="item style2">
-        <div class="itemshelf">
-            <div class="shelfinfo01">卤肉</div>
-            <div class="shelfinfo03">20元香菇卤肉套餐</div>
-            <div class="shelfinfo02 staring"><img src="../image/star_45.png" alt="">&nbsp;月售9587份</div>
-        </div>
-        <div class="buybtn"><p tapmode="" onclick="buyfood(2)">￥20</p>
-            <span class="minusorder">
-                <img src="../image/foodlist_bg_foodnum.png" alt="" class="numbg"><span class="thisordernum">0</span>
-                <span class="minus" tapmode="" onclick="minuscash(2)">－</span>
-            </span>
-        </div>
-    </div>
-
-
-
-    <div class="darktitle">精品商务套餐</div>
-    <div class="item style2">
-        <div class="itemshelf">
-            <div class="shelfinfo01">30元</div>
-            <div class="shelfinfo03">30元商务套餐</div>
-            <div class="shelfinfo02 staring"><img src="../image/star_45.png" alt="">&nbsp;月售2602份</div>
-        </div>
-        <div class="buybtn"><p tapmode="" onclick="buyfood(3)">￥30</p>
-            <span class="minusorder">
-                <img src="../image/foodlist_bg_foodnum.png" alt="" class="numbg"><span class="thisordernum">0</span>
-                <span class="minus" tapmode="" onclick="minuscash(3)">－</span>
-            </span>
-        </div>
-    </div>
-    <div class="item style2">
-        <div class="itemshelf">
-            <div class="shelfinfo01">排骨</div>
-            <div class="shelfinfo03">30元红烧排骨套餐</div>
-            <div class="shelfinfo02 staring"><img src="../image/star_45.png" alt="">&nbsp;月售2122份</div>
-        </div>
-        <div class="buybtn"><p tapmode="" onclick="buyfood(4)">￥30</p>
-            <span class="minusorder">
-                <img src="../image/foodlist_bg_foodnum.png" alt="" class="numbg"><span class="thisordernum">0</span>
-                <span class="minus" tapmode="" onclick="minuscash(4)">－</span>
-            </span>
-        </div>
-    </div>
-
+  {% endfor %}
     <div class="h50"></div>
     <div class="bottom">
         <img src="../image/cart.png" alt="">
         <span class="buyinfo" id="buyinfo"><span id="buynum">1</span>份 ￥<span id="totalcash">10</span></span>
         <span id="minbuy">￥0元起送</span>
-        <span id="buyit" tapmode="total-hover" onclick="openNewWin()">去结算</span>
+        <span id="buyit" tapmode="total-hover" onclick="openNewWin()"><a href="{% url 'confirm' %}">去结算</a></span>
     </div>
 
 </body>
-<script type="text/javascript" src="../script/api.js"></script>
+<script src="/static_url/public/js/jquery-2.1.3.min.js"></script>
+<script src="/static_url/public/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/static_url/shop/js/api.js"></script>
 <script type="text/javascript">
 var totalcash = 0;
 var buynum = 0;
+var ids = new Array();
 
-function buyfood (index) {
+function buyfood (index , price) {
     var buyinfodom = document.getElementById('buyinfo');
     var buynumdom = document.getElementById('buynum');
     var totalcashdom = document.getElementById('totalcash');
     var minbuydom = document.getElementById('minbuy');
     var buyitdom = document.getElementById('buyit');
-    var minusorderdom = document.getElementsByClassName('minusorder');
-    var thisordernumdom = document.getElementsByClassName('thisordernum');
-
-    var num = parseInt(thisordernumdom[index].innerHTML);
+    var num = parseInt($('.thisordernum'+index).html());
     num += 1;
 
     if (num >= 1) {
-        thisordernumdom[index].innerHTML = num;
+        $('.thisordernum'+index).html(num);
     }
 
+    $('.minusorder'+index)[0].style.display = 'inline-block';
 
-    minusorderdom[index].style.display = 'inline-block';
+    totalcash += price;
+    buynum += 1;
 
-    switch(index){
-        case 0:
-            totalcash += 25;
-            buynum += 1;
-            break;
-        case 1:
-        case 2:
-            totalcash += 20;
-            buynum += 1;
-            break;
-        case 3:
-        case 4:
-            totalcash += 30;
-            buynum += 1;
-            break;
-        default:
-            break;
-    }
+    $.cookie("goods"+index , index + "_" + num);
 
     if ( totalcash == 0) {
         buyinfodom.style.display = 'none';
     }
     else {
+        ids.push(index);  //给数组追加数据
+        $.cookie('ids',ids);
         buyitdom.style.display = 'inline-block';
         minbuydom.style.display = 'none';
         buyinfodom.style.display = 'inline-block';
         buynumdom.innerHTML = buynum;
         totalcashdom.innerHTML = totalcash;
-
     }
 }
 
-function minuscash (index) {
+
+function minuscash (index , price) {
     var buyinfodom = document.getElementById('buyinfo');
     var buynumdom = document.getElementById('buynum');
     var totalcashdom = document.getElementById('totalcash');
     var minbuydom = document.getElementById('minbuy');
     var buyitdom = document.getElementById('buyit');
-    var minusorderdom = document.getElementsByClassName('minusorder');
-    var thisordernumdom = document.getElementsByClassName('thisordernum');
+    var num = parseInt($('.thisordernum'+index).html());
 
-    var num = thisordernumdom[index].innerHTML;
     num -= 1;
-
     if (num >= 1) {
-        thisordernumdom[index].innerHTML = num;
+        $('.thisordernum'+index).html(num);
     }
     else{
-        thisordernumdom[index].innerHTML = num;
-        minusorderdom[index].style.display = 'none';
+        $('.thisordernum'+index).html(num);
+        $('.minusorder'+index)[0].style.display = 'none';
     }
 
-    switch(index){
-        case 0:
-            totalcash -= 25;
-            buynum -= 1;
-            break;
-        case 1:
-        case 2:
-            totalcash -= 20;
-            buynum -= 1;
-            break;
-        case 3:
-        case 4:
-            totalcash -= 30;
-            buynum -= 1;
-            break;
-        default:
-            break;
-    }
+    totalcash -= price;
+    buynum -= 1;
+
+    $.cookie("goods"+index , index + "_" + num);
 
     if ( totalcash == 0) {
         buyinfodom.style.display = 'none';
@@ -269,22 +177,19 @@ function minuscash (index) {
         buyinfodom.style.display = 'inline-block';
         buynumdom.innerHTML = buynum;
         totalcashdom.innerHTML = totalcash;
-
     }
+
+    for(var i=0;i<ids.length;i++){
+        if(ids[i]===index){
+            ids.splice(i,1);//从下标为i的元素开始，连续删除1个元素
+            i--;//因为删除下标为i的元素后，该位置又被新的元素所占据，所以要重新检测该位置
+        }
+    }
+    $.cookie('ids',ids);
 }
 
-function openNewWin() {
-    api.openWin ({
-        name: 'login',
-        url: './'+'login'+'.html',
-        rect:{
-            x:0,
-            y:0,
-            w:'auto',
-            h:'auto'
-        },
-        bounces: false
-    });
-}
+
+
+
 </script>
 </html>

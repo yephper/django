@@ -36,4 +36,4 @@ class Goods(models.Model):
 
 
     def __str__(self):
-        return u"%s (%s, %s)" % (self.gname, self.gdescription, self.gcontent)
+        return self.gname

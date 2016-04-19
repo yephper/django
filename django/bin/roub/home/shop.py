@@ -32,23 +32,23 @@ class shop(object):
             gids.append(i[0])
         # 执行原声sql
         try:
-            sql='SELECT id,gname,goprice FROM home_goods WHERE sid = 105 AND id IN (%s)'
+            sql='SELECT id,gname,goprice FROM home_goods WHERE  id IN (%s)'
             in_p=', '.join(list(map(lambda x: '%s', gids)))
             sql = sql % in_p
-            goodsInfo = Goods.objects.raw(sql, gids)
+            goodsInfo = list(Goods.objects.raw(sql, gids))
         except MySQLdb.Error as e:
             return HttpResponse("Mysql Error %d: %s" % (e.args[0], e.args[1]))
 
-        info = {}
-        data = []
-        for i in goodsInfo:
-            for v in goods:
-                if i.id == int(v[0]):
-                    info['id'] = i.id
-                    info['gname'] = i.gname
-                    info['buynum'] = int(v[1])
-                    info['buyprice'] = i.goprice * int(v[1])
-                    data.append(info)
+        # info = {}
+        # data = []
+        # for i in goodsInfo:
+        #     for v in goods:
+        #         if i.id == int(v[0]):
+        #             info['id'] = i.id
+        #             info['gname'] = i.gname
+        #             info['buynum'] = int(v[1])
+        #             info['buyprice'] = i.goprice * int(v[1])
+        #             data.append(info)
 
-        return HttpResponse(data)
+        return HttpResponse(goodsInfo)
         return render(request, 'shop/confirm.html' , {'goodsInfo':data , 'goods':goods})

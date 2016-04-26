@@ -37,3 +37,13 @@ class Goods(models.Model):
 
     def __str__(self):
         return self.gname
+
+
+
+class Order(models.Model):
+    o_name     = models.CharField(u'订单商品名称', max_length=100,unique=True)
+    o_phone    = models.IntegerField(u'订单手机号', max_length=11,unique=True)
+    o_address  = models.CharField(u'订单地址', max_length=100,unique=True)
+
+    def __str__(self):
+        return self.o_id

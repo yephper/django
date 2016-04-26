@@ -1,6 +1,6 @@
 from django.shortcuts import render,render_to_response
 from django.http import HttpResponse,JsonResponse,HttpResponseRedirect
-from .models import Goods
+from .models import Goods,Order
 import json,datetime,MySQLdb
 from django.template import RequestContext
 from django import forms
@@ -50,5 +50,18 @@ class shop(object):
         #             info['buyprice'] = i.goprice * int(v[1])
         #             data.append(info)
 
-        return HttpResponse(goodsInfo)
-        return render(request, 'shop/confirm.html' , {'goodsInfo':data , 'goods':goods})
+        #return HttpResponse(gids)
+        return render(request, 'shop/confirm.html' , {'goodsInfo':goodsInfo , 'goods':goods})
+
+
+    # 提交订单
+    def sendOrder(request):
+        data    = request.POST
+        name    = data['o_name']
+        phone   = data['o_phone'];
+        address = data['o_address'];
+
+        orderInfo = Order(o_name=name , o_phone=phone , o_address=address);
+        result = orderInfo.save();
+
+        return HttpResponse(result)

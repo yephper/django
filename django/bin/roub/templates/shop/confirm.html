@@ -9,9 +9,54 @@
 <link rel="stylesheet" href="/static_url/public/css/xpull.css">
 <link rel="stylesheet" href="/static_url/public/css/orderpay.css">
 <link rel="stylesheet" href="/static_url/public/css/tianhuxiyi.css">
+<script src="/static_url/public/js/jquery-2.1.3.min.js"></script>
+<script src="/static_url/public/js/swiper.min.js"></script>
+<script src="/static_url/public/js/layerm/layer.m.js"></script>
 <script>
 //10px 1rem;
 !function(){function a(){if(document.documentElement.clientWidth<600){document.documentElement.style.fontSize=document.documentElement.clientWidth/32+"px"}else{document.documentElement.style.fontSize="16.875px"}}var b=null;window.addEventListener("resize",function(){clearTimeout(b),b=setTimeout(a,300)},!1),a()}(window);
+function checksub(){
+		var o_name    = $("#o_name").val();
+		var o_phone   = $("#o_phone").val();
+		var o_address = $("#o_address").val();
+		var re = /^1\d{10}$/;
+		var msg = '';
+		if(o_name == ''){
+        layer.closeAll();
+			  layer.open({content: '请输入您的姓名',time: 2});
+    		return false;
+		}
+		if(o_phone == ''){
+        layer.closeAll();
+			  layer.open({content: '请输入您的手机号',time: 2});
+    		return false;
+		}
+		if(!re.test(o_phone)){
+        layer.closeAll();
+			  layer.open({content: '手机号格式不正确',time: 2});
+    		return false;
+		}
+    if(o_address == ''){
+        layer.closeAll();
+			  layer.open({content: '请输入您的地址',time: 2});
+    		return false;
+		}
+		$.ajax( {
+        url:'/sendOrder/',
+        data:{
+          o_phone   : o_phone,
+          o_name    : o_name,
+          o_address : o_address,
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        type:'post',
+        cache:false,
+//        dataType:'json',
+        success:function(data) {
+            alert(data);
+        }
+     });
+}
 </script>
 </head>
 <body class="ios">
@@ -51,16 +96,16 @@
 			<div class="sec-body">
 				<form class="active">
 					<div>
-						<input type="text" placeholder="请输入姓名" value="">
+						<input type="text" placeholder="请输入姓名" value="" name="o_name" id="o_name">
 					</div>
 					<div>
-						<input type="tel" placeholder="请输入手机号码" value="">
+						<input type="tel" placeholder="请输入手机号码" value="" name="o_phone" id="o_phone">
 					</div>
 					<div>
-						<input type="text" placeholder="请输入地址" value="">
+						<input type="text" placeholder="请输入地址" value="" name="o_address" id="o_address">
 					</div>
 					<div>
-						<input type="text" placeholder="备注留言" value="">
+						<input type="text" placeholder="备注留言" value="" name="o_remarks" id="o_remarks">
 					</div>
 
 				</form>
@@ -107,7 +152,7 @@
 			<div class="cart-price">共￥<span>28</span></div>
 			<div class="cart-freight">(运费￥<span>18</span>)</div>
 		</div>
-		<a class="btn btn-primary" href="#">立即下单</a>
+		<a class="btn btn-primary" href="javascrip:void(0)" onclick="checksub()">立即下单</a>
 		</div>
 	</div>
 <div class="modal" id="agreement" style="display:none;">
@@ -131,8 +176,6 @@
 			</div>
 		</div>
 	</div>
-<script src="/static_url/public/js/jquery-2.1.3.min.js"></script>
-<script src="/static_url/public/js/swiper.min.js"></script>
 	<script>
 		var aIcoSelect = $(".ico-select");
 		var aSelectLi = aIcoSelect.parent('li');
@@ -154,23 +197,23 @@
 		}
 	// 协议弹出框
 
-		var agreementModal = $("#agreement");
-		var $body = $("body");
-		$("#js_agreement").click(function(ev) {
-			$body.css("overflow","hidden");
-			agreementModal.show(0, swiper);
-		});
-		$(".modal-body").click(function(ev) {
-			ev.stopPropagation();
-		});
-		$(".modal-dialog").click(function(ev) {
-			$(".modal").hide();
-			$body.css("overflow","auto");
-		});
-		$(".js_no").click(function(event) {
-			$(".modal").hide();
-			$body.css("overflow","auto");
-		});
+//		var agreementModal = $("#agreement");
+//		var $body = $("body");
+//		$("#js_agreement").click(function(ev) {
+//			$body.css("overflow","hidden");
+//			agreementModal.show(0, swiper);
+//		});
+//		$(".modal-body").click(function(ev) {
+//			ev.stopPropagation();
+//		});
+//		$(".modal-dialog").click(function(ev) {
+//			$(".modal").hide();
+//			$body.css("overflow","auto");
+//		});
+//		$(".js_no").click(function(event) {
+//			$(".modal").hide();
+//			$body.css("overflow","auto");
+//		});
 		var option = {
 			direction: 'vertical',
 			slidesPerView: 3,

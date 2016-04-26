@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^feedback', views.home.feedback , name='feedback'),
     url(r'^shopList', shop.shop.shopList , name='shopList'),
     url(r'^confirm', shop.shop.confirm , name='confirm'),
+    url(r'^sendOrder', shop.shop.sendOrder , name='sendOrder'),
     url(r'^static_url/(?P<path>.*)$',static.serve,{'document_root':settings.STATIC_PATH}),   # css,js,img 路径
 ]

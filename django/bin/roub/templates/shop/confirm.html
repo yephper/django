@@ -36,25 +36,26 @@ function checksub(){
 			  layer.open({content: '手机号格式不正确',time: 2});
     		return false;
 		}
-    if(o_address == ''){
+    	if(o_address == ''){
         layer.closeAll();
 			  layer.open({content: '请输入您的地址',time: 2});
     		return false;
 		}
+
 		$.ajax( {
-        url:'/sendOrder/',
-        data:{
-          o_phone   : o_phone,
-          o_name    : o_name,
-          o_address : o_address,
-          csrfmiddlewaretoken: '{{ csrf_token }}',
-        },
-        type:'post',
-        cache:false,
-//        dataType:'json',
-        success:function(data) {
-            alert(data);
-        }
+	        url :'/sendOrder/',
+	        data:{
+	          o_phone   : o_phone,
+	          o_name    : o_name,
+	          o_address : o_address,
+	          csrfmiddlewaretoken: '{{ csrf_token }}',
+	        },
+	        type:'post',
+	        cache:false,
+	//        dataType:'json',
+	        success:function(data) {alert(data);
+	            window.location.href = "/myOrder/";
+	        }
      });
 }
 </script>
@@ -62,7 +63,7 @@ function checksub(){
 <body class="ios">
 <header class="header tianhuxiyi-header">
 	<h1>订单确定</h1>
-	<a href="javascript:;" class="ico header-back"></a>
+	<a href="javascript:history.go(-1);" class="ico header-back"></a>
 </header>
 <div class="main container p-t" id="submitOrder">
 		<section class="orderlist wavebottom">
@@ -171,7 +172,7 @@ function checksub(){
 				</div>
 				<div class="modal-footer">
 					<a class="btn-no js_no" href="javascript:;">取消</a>
-					<a class="btn-yes js_no" href="javascript:;">确定</a>
+					<a class="btn-no js_no" href="javascript:;">确定</a>
 				</div>
 			</div>
 		</div>
@@ -197,23 +198,23 @@ function checksub(){
 		}
 	// 协议弹出框
 
-//		var agreementModal = $("#agreement");
-//		var $body = $("body");
-//		$("#js_agreement").click(function(ev) {
-//			$body.css("overflow","hidden");
-//			agreementModal.show(0, swiper);
-//		});
-//		$(".modal-body").click(function(ev) {
-//			ev.stopPropagation();
-//		});
-//		$(".modal-dialog").click(function(ev) {
-//			$(".modal").hide();
-//			$body.css("overflow","auto");
-//		});
-//		$(".js_no").click(function(event) {
-//			$(".modal").hide();
-//			$body.css("overflow","auto");
-//		});
+		var agreementModal = $("#agreement");
+		var $body = $("body");
+		$("#js_agreement").click(function(ev) {
+			$body.css("overflow","hidden");
+			agreementModal.show(0, swiper);
+		});
+		$(".modal-body").click(function(ev) {
+			ev.stopPropagation();
+		});
+		$(".modal-dialog").click(function(ev) {
+			$(".modal").hide();
+			$body.css("overflow","auto");
+		});
+		$(".js_no").click(function(event) {
+			$(".modal").hide();
+			$body.css("overflow","auto");
+		});
 		var option = {
 			direction: 'vertical',
 			slidesPerView: 3,

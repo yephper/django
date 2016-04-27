@@ -59,9 +59,16 @@ class shop(object):
         data    = request.POST
         name    = data['o_name']
         phone   = data['o_phone'];
-        address = data['o_address'];
+        address = data['o_address'];return HttpResponse(phone)
 
         orderInfo = Order(o_name=name , o_phone=phone , o_address=address);
         result = orderInfo.save();
 
         return HttpResponse(result)
+
+
+    # 我的订单
+    def myOrder(request):
+        orderList = response = Order.objects.all()
+
+        return render(request, 'shop/myOrder.html' , {'title_name':"我的订单" , 'page_name':"我的订单" , 'orderList':orderList})

@@ -1,0 +1,12 @@
+{% block header %}
+<script>
+    //10px 1rem;
+    !function(){function a(){if(document.documentElement.clientWidth<600){document.documentElement.style.fontSize=document.documentElement.clientWidth/32+"px"}else{document.documentElement.style.fontSize="16.875px"}}var b=null;window.addEventListener("resize",function(){clearTimeout(b),b=setTimeout(a,300)},!1),a()}(window);
+</script> 
+
+<header class="header">
+    <h1>{{ page_name }}</h1>
+	<a href="javascript:history.back(-1);" class="ico header-back"></a>
+
+</header>
+{% endblock %} 

@@ -1,0 +1,175 @@
+{% extends "common.html" %}
+{% block body %}
+    <link rel="stylesheet" href="/static_url/mobile/css/myorder.css">
+    <div class="tab-nav nav-myorder">
+        <div class="container">
+            <ul class="li-4 clearfix tab-myorder">
+                <li class="active"><a href="javascript:;">全部</a></li>
+                <li><a href="javascript:;">待付款</a></li>
+                <li><a href="javascript:;">待处理</a></li>
+                <li><a href="javascript:;">待完成</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="main container p-92">
+        <div class="tab-content active">
+            {% for vo in orderList %}
+            <section class="myorder-list">
+                <div class="myorder-title">
+                    <p class="myorder-no">订单号：{{ vo.id }}</p>
+                    <p class="myorder-time">下单时间：</p>
+                    <div class="myorder-seat">
+                        店内消费
+                    </div>
+                </div>
+                <div class="myorder-body">
+                    <div class="myorder-status">
+                        <p>支付状态：<span>已完成</span></p>
+                        <p>订单状态：<span>已完成</span></p>
+                    </div>
+                    <ul class="clearfix">
+                    
+                        
+
+                        <li>
+                            <span class="myorder-name">{{ vo.o_name }}</span>
+                            <span class="myorder-price">tel:{{ vo.o_phone }}</span>
+                            <span class="myorder-num">{{ vo.o_address }}</span>
+                        </li>
+
+
+                    </ul>
+
+
+                    <div class="myorder-sum clearfix">
+                        <p class="fl-r">共{{ goodsCount }}件商品,合计：<strong>{{ vo.o_price }}元</strong></p>
+                    </div>
+                    <div class="myorder-sum clearfix">
+                        <p class="fl-r"><strong>{{ vo.address }}</strong></p>
+                    </div>
+                </div>
+                <div class="myorder-footer">
+                    <!-- <a class="btn btn-o" href="javascript:;" onclick="ch_paytype('{$vo.o_id}',0);">线下支付</a>-->
+                    <a class="btn btn-o" href="javascript:;" onclick="ch_dtype('{{ vo.id }} ',3);">取消订单</a>
+                    <a class="btn btn-o" href="javascript:;" onclick="ch_pay('{{ vo.id }} ');">付款</a>
+                    <a class="btn btn-o" href="tel:{{ vo.shop_tel }}">联系我们</a>
+                </div>
+            </section>
+            {% endfor %}
+        </div>
+        
+    </div>
+    
+    <div class="modal" id="play-success">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog modal-s">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h6 class="modal-title modal-title-single">操作成功</h6>
+                </div>
+                <div class="modal-footer modal-footer">
+                    <a class="btn-yes play-success-yes" href="javascript:;" style="width:100%;">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal con-qx" id="con-qx">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog modal-s">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h6 class="modal-title modal-title-single">确定要取消该笔订单吗?</h6>
+                </div>
+                <div class="modal-footer modal-footer">
+                    <a class="btn-qx-no" href="javascript:;">返回</a><a class="btn-qx-yes" href="javascript:;">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal con-qx" id="con-qx-2">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog modal-s">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h6 class="modal-title modal-title-single"><input type="text" value="" id="qx-reason-xxx" placeholder="点击输入取消订单的原因"/></h6>
+                </div>
+                <div class="modal-footer modal-footer">
+                    <a class="btn-qx-no" href="javascript:;">返回</a><a class="btn-qx-yes" href="javascript:;">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal con-qx" id="con-qx-3">
+        <div class="modal-backdrop"></div>
+        <div class="modal-dialog modal-s">
+            <div class="modal-content">
+                <div class="modal-body">
+                
+                    <h6 class="modal-title">确定要提交退单申请吗?</h6>
+                    <!-- <p class="modal-p">您好！由于您的订单商户已受理，取消订单请先联系商户，由商户确认后为您关闭订单，谢谢！</p> -->
+                    <p class="modal-p">退单原因:<input type="text" value="" id="qx-reason" placeholder="点击输入"/></p>
+                </div>
+                <div class="modal-footer modal-footer">
+                    <a class="btn-qx-no" href="javascript:;">返回</a><a class="btn-qx-yes" href="javascript:;">确定</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var aTabNavLi = $(".tab-nav li");
+        var aTabContent = $(".tab-content");
+        aTabNavLi.click(function() {
+            var _this = $(this);
+            var index = _this.index();
+            aTabNavLi.removeClass('active');
+            _this.addClass('active');
+            aTabContent.removeClass('active');
+            aTabContent.eq(index).addClass('active');
+        });
+    </script>
+{% endblock %}
+<!-- <section class="myorder-list">
+                <div class="myorder-title">
+                    <p class="myorder-no">订单号：{{ vo.o_id }</p>
+                    <p class="myorder-time">下单时间：{{ vo.time }}</p>
+                    <div class="myorder-seat">
+                        店内消费
+                    </div>
+                </div>
+                <div class="myorder-body">
+                    <div class="myorder-status">
+                        <p>支付状态：<span>{{ vo.paytype_name }}</span></p>
+                        <p>订单状态：<span>{{ vo.dtype_name }}</span></p>
+                    </div>
+                    <ul class="clearfix">
+                    
+                        
+
+                        <li>
+                            <span class="myorder-name">{{ value.sp_name }}</span>
+                            <span class="myorder-price">￥{{ value.sp_gdprice }}</span>
+                            <span class="myorder-num">X{{ value.sp_number }}</span>
+                        </li>
+
+
+                    </ul>
+
+
+                    <div class="myorder-sum clearfix">
+                        <p class="fl-r">共{{ goodsCount }}件商品,合计：<strong>{{ vo.o_price }}元</strong></p>
+                    </div>
+                    <div class="myorder-sum clearfix">
+                        <p class="fl-r"><strong>{{ vo.close_name }}</strong></p>
+                    </div>
+                </div>
+                <div class="myorder-footer">
+                    <!-- <a class="btn btn-o" href="javascript:;" onclick="ch_paytype('{$vo.o_id}',0);">线下支付</a>-->
+                    <a class="btn btn-o" href="javascript:;" onclick="ch_dtype('{{ vo.o_id }} ',3);">取消订单</a>
+                    <a class="btn btn-o" href="javascript:;" onclick="ch_pay('{{ vo.o_id }} ');">付款</a>
+                    <a class="btn btn-o" href="tel:{{ vo.shop_tel }}">联系我们</a>
+                </div>
+            </section> -->

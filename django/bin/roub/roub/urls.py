@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^shopList', shop.shop.shopList , name='shopList'),
     url(r'^confirm', shop.shop.confirm , name='confirm'),
     url(r'^sendOrder', shop.shop.sendOrder , name='sendOrder'),
+    url(r'^myOrder', shop.shop.myOrder , name='myOrder'),
     url(r'^static_url/(?P<path>.*)$',static.serve,{'document_root':settings.STATIC_PATH}),   # css,js,img 路径
 ]

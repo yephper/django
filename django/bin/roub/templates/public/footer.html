@@ -1,0 +1,24 @@
+<script src="/static_url/mobile/js/fastclick.js"></script>
+<script>
+	$(function() {
+		//fastclick,使移动端点击没有延迟
+		FastClick.attach(document.body);
+	});
+</script>
+<script src="__PUBLIC__/Js/Mobile/interactive.js"></script>
+<footer>
+	<ul class="footer-menu">
+        <li class="current">
+        	<a href="{:U('Index/index')}"><span class="icon-menu home"></span><p>首页</p></a>
+        </li>
+        <li>
+        	<a href="javascript:void(0);"  onclick="baichuanIM('{$jid}','{$mid}');"><span class="icon-menu msg"></span><p>客服</p></a>
+        </li>
+        <li>
+        	<a href="javascript:void(0);"  onclick="sendStr('nearby');"><span class="icon-menu find"></span><p>附近</p></a>
+        </li>
+        <li>
+        	<a href="{:U('User/index')}"><span class="icon-menu my"></span><p>我的</p></a>
+        </li>
+    </ul>
+</footer>
